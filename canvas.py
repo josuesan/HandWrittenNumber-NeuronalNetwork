@@ -2,6 +2,8 @@ import sys, pygame
 import PIL
 from PIL import Image
 from pygame.locals import *
+import json
+import os.path as path
 # - network.py example:
 import network
 def AllCanvas():
@@ -14,7 +16,7 @@ def AllCanvas():
     ventana.fill((255,255,255))
 
     brush = pygame.image.load("dot.png")
-    brush = pygame.transform.scale(brush,(30,30))
+    brush = pygame.transform.scale(brush,(16,16))
     pygame.display.update()
     clock = pygame.time.Clock()
 
@@ -31,24 +33,25 @@ def AllCanvas():
                 sys.exit()
             
             elif event.type == KEYDOWN:
-                #print(event.key)
                 if (event.key == K_KP_ENTER or event.key == K_RETURN ) :
                     pygame.image.save(ventana,"prueba.png" )             
                     im = Image.open("prueba.png")
+                    #toJS(im)
+                    im = im.rotate(90)
+                    #im.show()
                     im = im.resize((28, 28), PIL.Image.LANCZOS)
                     runarray = []
                     for a in range(0,28): #Ancho
-                        for b in range(0,28): #Largo
+                        #for b in range(0,28): #Largo
+                        for b in range(27,-1,-1): #Largo
                             pix = im.load()
                             pix[a,b]
                             if pix[a,b] == (255, 255, 255):
                                 runarray.append(0)
                             else:
                                 runarray.append(1)
-                    #print (len(runarray))
                     return runarray
                 if event.key == K_BACKSPACE:
-                    #print("borrar")
                     ventana.fill((255,255,255))
                     pygame.display.update()
                         
@@ -59,8 +62,9 @@ def AllCanvas():
                 t = 0
                     
             if t == 1:
-                ventana.blit(brush,(x-15,y-15))
+                ventana.blit(brush,(x-8,y-8))
                 pygame.display.update()
+
 def finalWindow(response):
     pygame.init()
  
@@ -88,3 +92,22 @@ def finalWindow(response):
                 sys.exit()
      
         clock.tick(20)
+def toJS(im):
+    im = im.rotate(90)
+    #resize image
+    imResize = im.resize((28, 28), PIL.Image.LANCZOS)
+    runarrayResize = []
+    for a in range(0,28): #Ancho
+        runarrayResize.append([])
+        for b in range(27,0,-1): #Largo
+            pix = imResize.load()
+            pix[a,b]
+            if pix[a,b] == (255, 255, 255):
+                runarrayResize[a].append(0)
+            else:
+                runarrayResize[a].append(1)
+    data = {
+        "ImageResize": [runarrayResize],      
+    }
+    with open('./imagenes.json', 'w') as outfile:
+        json.dump(data, outfile)

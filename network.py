@@ -87,8 +87,8 @@ class Network(object):
 
         training_data = list(training_data)
         n = len(training_data)
-
         if test_data:
+            flag= 1
             test_data = list(test_data)
             n_test = len(test_data)
 
@@ -99,10 +99,11 @@ class Network(object):
                 for k in range(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
-            '''if test_data:
+
+            if flag:
                 print("epocas {} : {} / {}".format(j,self.evaluate(test_data),n_test));
-            else:
-                print("epocas {} complete".format(j))'''
+            #else:
+                #print("epocas {} complete".format(j))'''
 
         print("acabo el training")
 
