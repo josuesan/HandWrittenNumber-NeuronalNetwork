@@ -10,7 +10,7 @@ def AllCanvas():
     
     pygame.init()
 
-    ventana = pygame.display.set_mode((500,500))
+    ventana = pygame.display.set_mode((100,100))
     titulo = pygame.display.set_caption("Reconocimiento de numeros")
 
     ventana.fill((255,255,255))

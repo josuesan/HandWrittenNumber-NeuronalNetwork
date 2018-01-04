@@ -7,12 +7,12 @@ import canvas
 training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
 training_data = list(training_data)
 
-net = network.Network([784, 40, 10])
+net = network.Network([784, 30, 10])
 if path.exists("./miEntrenamiento.json"):
    pass
 else:
     #net.SGD(training_data, 30, 10, 3.0, test_data=test_data)
-    net.SGD(training_data, 30, 10, 4.5, test_data=test_data)
+    net.SGD(training_data, 35, 9, 3.5, test_data=test_data)
     net.SaveData()
 
 drawNumber = canvas.AllCanvas()
